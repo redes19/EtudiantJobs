@@ -1,0 +1,24 @@
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'recruteur', 'chercheur') NOT NULL
+);
+
+CREATE TABLE chercher (
+    user_id INT PRIMARY KEY,
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+);
+
+CREATE TABLE profil (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    chercher_id INT NOT NULL,
+    description TEXT NULL,
+    pdf_file LONGBLOB NULL, -- Stocke le fichier PDF directement
+    linkedin_url VARCHAR(255) NULL,
+    github_url VARCHAR(255) NULL,
+    phone_number VARCHAR(15) NULL,
+    FOREIGN KEY (chercher_id) REFERENCES chercher(user_id) ON DELETE CASCADE
+);

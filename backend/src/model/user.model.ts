@@ -1,6 +1,6 @@
 import {role} from '../domain/user.domain';
 
-export interface user {
+export interface IUser {
     id: number;
     nom :string;
     prenom: string;
