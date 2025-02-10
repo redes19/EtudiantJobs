@@ -13,15 +13,9 @@ RUN npm install
 # Copier tout le code dans le conteneur
 COPY . .
 
-# Construire l'application pour la production
-RUN npm run build
-
-# Installer un serveur HTTP léger pour servir le frontend
-RUN npm install -g serve
-
 # Exposer le port (par exemple, 3000)
 EXPOSE 3000
 
 # Démarrer l'application
-CMD ["serve", "-s", "dist"]
+CMD ["npm", "run", "dev"]
 

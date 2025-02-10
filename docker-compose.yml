@@ -4,6 +4,9 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
     ports:
       - "${DB_PORT_BACKEND}"
     environment:
@@ -18,8 +21,14 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     ports:
       - "${DB_PORT_FRONTEND}"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: ["npm", "run", "dev", "--", "--host", "--port", "3000"]
 
   mariadb:
     image: mariadb:latest
