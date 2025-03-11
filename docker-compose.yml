@@ -6,9 +6,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./backend:/app
-      - /app/node_modules
     ports:
       - "${DB_PORT_BACKEND}"
+    networks:
+      - app-network
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
@@ -23,9 +24,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend:/app
-      - /app/node_modules
     ports:
       - "${DB_PORT_FRONTEND}"
+    networks:
+      - app-network
     environment:
       - CHOKIDAR_USEPOLLING=true
     command: ["npm", "run", "dev", "--", "--host", "--port", "3000"]
@@ -43,3 +45,8 @@ services:
 
 volumes:
   mariadb_data:
+
+networks:
+  app-network:
+    driver: bridge
+
